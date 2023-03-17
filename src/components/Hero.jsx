@@ -3,8 +3,8 @@ import Button from "./Button";
 function Hero() {
   return (
     <div className="text-white">
-      <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
-        <div class="text-center lg:w-5/12 w-full">
+      <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
+        <div className="text-center lg:w-5/12 w-full">
           <h1 className="my-4 text-5xl font-bold leading-tight">
             Conquer the crypto trading world
           </h1>
