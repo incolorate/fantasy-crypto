@@ -1,4 +1,4 @@
-import Button from "./Button";
+import Button from "../Button";
 function NavBar() {
   return (
     <nav className="p-1 text-white">
