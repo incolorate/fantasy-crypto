@@ -4,11 +4,9 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     userName: "incolorate",
-    wallet: [
-      {
-        USD: 1200,
-      },
-    ],
+    wallet: {
+      USD: 1200,
+    },
   },
   reducers: {
     buyCrypto(state, action) {
