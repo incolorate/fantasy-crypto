@@ -6,8 +6,6 @@ function Trade() {
     return state.user;
   });
 
-  console.log(wallet);
-
   const COINS = ["bitcoin", "ethereum", "binancecoin", "ripple", "cardano"];
 
   let renderedCoins = COINS.map((coin) => {

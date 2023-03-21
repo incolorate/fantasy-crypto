@@ -1,4 +1,5 @@
 import Button from "../Button";
+import { Link } from "react-router-dom";
 
 function Hero() {
   return (
@@ -14,9 +15,11 @@ function Hero() {
             begin!
           </p>
           <div className="flex justify-center mx-auto">
-            <Button primary={true} rounded>
-              Play now
-            </Button>
+            <Link to="/dashboard">
+              <Button primary={true} rounded>
+                Play now
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
