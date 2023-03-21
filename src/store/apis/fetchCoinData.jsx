@@ -7,7 +7,10 @@ export const coinsApi = createApi({
     getTrendingCoins: builder.query({
       query: () => "search/trending",
     }),
+    getCoinData: builder.query({
+      query: (coin) => `coins/${coin}`,
+    }),
   }),
 });
 
-export const { useGetTrendingCoinsQuery } = coinsApi;
+export const { useGetTrendingCoinsQuery, useGetCoinDataQuery } = coinsApi;

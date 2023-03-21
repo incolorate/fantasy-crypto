@@ -1,8 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import { buyCrypto, sellCrypto, userSliceReducer } from "./slices/userSlice";
+import {
+  buyCrypto,
+  sellCrypto,
+  userSliceReducer,
+  updateUsd,
+} from "./slices/userSlice";
 import { coinsApi } from "./apis/fetchCoinData";
-
 const store = configureStore({
   reducer: {
     user: userSliceReducer,
@@ -14,4 +18,4 @@ const store = configureStore({
 
 setupListeners(store.dispatch);
 
-export { store, sellCrypto, buyCrypto };
+export { store, sellCrypto, buyCrypto, updateUsd };

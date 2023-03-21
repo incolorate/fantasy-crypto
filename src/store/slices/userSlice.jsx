@@ -8,9 +8,17 @@ const userSlice = createSlice({
       USD: 1200,
     },
   },
+
   reducers: {
     buyCrypto(state, action) {
-      state.userName = "blah";
+      console.log(action.payload.coin);
+      let coinType = action.payload.coin;
+      let amountBought = action.payload.amountBought;
+      state.wallet[coinType] =
+        Number(state.wallet[coinType] || 0) + Number(amountBought);
+    },
+    updateUsd(state, action) {
+      state.wallet.USD = state.wallet.USD - action.payload;
     },
     sellCrypto(state, action) {
       state.userName = "blah";
@@ -18,5 +26,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { buyCrypto, sellCrypto } = userSlice.actions;
+export const { buyCrypto, sellCrypto, updateUsd } = userSlice.actions;
 export const userSliceReducer = userSlice.reducer;
