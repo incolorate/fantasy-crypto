@@ -10,6 +10,10 @@ const userSlice = createSlice({
   },
 
   reducers: {
+    updateWalletFromLocalStorage(state, action) {
+      state.wallet = action.payload;
+      console.log(state.wallet);
+    },
     buyCrypto(state, action) {
       console.log(action.payload.coin);
       let coinType = action.payload.coin;
@@ -26,5 +30,10 @@ const userSlice = createSlice({
   },
 });
 
-export const { buyCrypto, sellCrypto, updateUsd } = userSlice.actions;
+export const {
+  buyCrypto,
+  sellCrypto,
+  updateUsd,
+  updateWalletFromLocalStorage,
+} = userSlice.actions;
 export const userSliceReducer = userSlice.reducer;

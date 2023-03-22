@@ -1,6 +1,5 @@
 import NavBar from "./NavBar";
 import Hero from "./Hero";
-import Card from "./Card";
 
 function LandingPage() {
   return (
@@ -10,9 +9,6 @@ function LandingPage() {
           <NavBar />
           <Hero />
         </div>
-      </div>
-      <div className="bg-white h-screen bg-gradient-to-bl from-black via-black to-violet-900">
-        <Card />
       </div>
     </div>
   );

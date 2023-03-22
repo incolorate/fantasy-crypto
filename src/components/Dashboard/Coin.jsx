@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import Button from "../Button";
-import { useDispatch } from "react-redux";
 import { buyCrypto, updateUsd } from "../../store";
 import { useGetCoinDataQuery } from "../../store/apis/fetchCoinData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import classNames from "classnames";
 
 function Coin({ coinType }) {
   const { userName, wallet } = useSelector((state) => {
@@ -12,8 +12,6 @@ function Coin({ coinType }) {
 
   const [amountOfUsdSpent, setAmountOfUsdSpent] = useState();
   const { data, isLoading } = useGetCoinDataQuery(coinType);
-
-  const dispatch = useDispatch();
 
   const handleBuy = (e) => {
     e.preventDefault();
@@ -35,20 +33,41 @@ function Coin({ coinType }) {
   };
 
   let coinName;
-
+  let symbol;
+  let priceChange;
+  let priceInUsd;
+  let coinImage;
   if (isLoading) {
     coinName = <h1>Loading...</h1>;
   } else {
     coinName = data.name;
+    symbol = data.symbol.toUpperCase();
+    priceChange = data.market_data.price_change_percentage_24h;
+    priceInUsd = data.market_data.current_price.usd;
+    coinImage = data.image.thumb;
   }
+  let priceChangeBackgroundClasses = classNames({
+    "bg-red-200  text-red-900": priceChange < 0,
+    "bg-green-200  text-green-900": priceChange > 0,
+  });
 
+  console.log(data);
   return (
-    <div>
-      <div
-        className="bg-slate-300 bg-opacity-10 w-full p-8 
-                rounded-xl flex justify-between align-middle text-white"
+    <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 bg-opa">
+      <th
+        scope="row"
+        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex gap-2 align-middle"
       >
-        <div>{coinName}</div>
+        <img src={coinImage} alt={`${coinName}-image`} />
+        <p className="m-0 p-0 text-lg">
+          {coinName} · {symbol}
+        </p>
+      </th>
+      <td className="px-6 py-4">
+        <p className={priceChangeBackgroundClasses}>{priceChange} %</p>
+      </td>
+      <td className="px-6 py-4">${priceInUsd}</td>
+      <td className="px-6 py-4">
         <form onSubmit={handleBuy}>
           <input
             type="number"
@@ -60,8 +79,8 @@ function Coin({ coinType }) {
           ></input>
           <Button primary>Buy</Button>
         </form>
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 }
 

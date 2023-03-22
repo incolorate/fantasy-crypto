@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function SideBar() {
   return (
-    <div className="max-sm:bottom-0  max-sm:h-16 max-sm:w-full fixed sm:top-0 sm:left-0 sm:h-screen sm:w-16 m-0 flex sm:flex-col bg-gray-900 text-white shadow-xl">
+    <div className="overflow-hidden max-sm:justify-around max-sm:bottom-0  max-sm:h-16 max-sm:w-full fixed sm:top-0 sm:left-0 sm:h-screen sm:w-16 m-0 flex sm:flex-col bg-gray-900 text-white shadow-xl">
       <Link to="">
         <SideBarIcon icon={<MdOutlineDashboard />} text="Dashboard" />
       </Link>
