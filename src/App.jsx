@@ -1,6 +1,6 @@
 import LandingPage from "./components/LandingPage/LandingPage";
 import { Route, Routes } from "react-router-dom ";
-import DashBoard from "./components/Dashboard/Dashboard";
+import DashBoard from "./components/Dashboard/DashBoard";
 import Intro from "./components/Dashboard/Intro";
 import Wallet from "./components/Dashboard/Wallet";
 import Trade from "./components/Dashboard/Trade";
