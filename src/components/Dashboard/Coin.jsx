@@ -4,52 +4,20 @@ import { buyCrypto, updateUsd } from "../../store";
 import { useGetCoinDataQuery } from "../../store/apis/fetchCoinData";
 import { useState, useEffect } from "react";
 import classNames from "classnames";
+import BuyModal from "../BuyModal";
+import { TbSquareRoundedPlusFilled } from "react-icons/tb";
 
 function Coin({ coinType }) {
-  const { userName, wallet } = useSelector((state) => {
-    return state.user;
-  });
+  const [modal, setModal] = useState(false);
 
-  const [amountOfUsdSpent, setAmountOfUsdSpent] = useState();
-  const [amountToSell, setAmountToSell] = useState(wallet[coinType]);
-
-  const dispatch = useDispatch();
+  const handleOpenModal = () => {
+    setModal(true);
+  };
+  const handleCloseModal = () => {
+    setModal(false);
+  };
 
   const { data, isLoading, error } = useGetCoinDataQuery(coinType);
-
-  const handleBuy = (e) => {
-    e.preventDefault();
-    if (wallet.USD >= amountOfUsdSpent) {
-      dispatch(updateUsd(amountOfUsdSpent));
-
-      let dispatchObject = {
-        amountBought: amountOfUsdSpent / data.market_data.current_price.usd,
-        coin: data.id,
-      };
-
-      dispatch(buyCrypto(dispatchObject));
-      setAmountOfUsdSpent(0 || "");
-    }
-  };
-
-  const handleSell = (e) => {
-    e.preventDefault();
-    if (wallet.USD >= amountOfUsdSpent) {
-      dispatch(updateUsd(amountOfUsdSpent));
-
-      let dispatchObject = {
-        amountBought: amountOfUsdSpent / data.market_data.current_price.usd,
-        coin: data.id,
-      };
-
-      dispatch(buyCrypto(dispatchObject));
-      setAmountOfUsdSpent(0 || "");
-    }
-  };
-
-  const handleChange = (e) => {
-    setAmountOfUsdSpent(e.target.value);
-  };
 
   let coinName;
   let symbol;
@@ -77,47 +45,36 @@ function Coin({ coinType }) {
   });
 
   return (
-    <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 bg-opa">
+    <tr className="border-b bg-gray-900 border-gray-700 bg-opacity-5">
       <th
         scope="row"
-        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex gap-2 align-middle"
+        className="px-2 sm:px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex gap-2 align-middle"
       >
-        <img src={coinImage} alt={`${coinName}-image`} />
-        <p className="m-0 p-0 text-lg">
-          {coinName} · {symbol}
-        </p>
+        <img
+          src={coinImage}
+          alt={`${coinName}-image`}
+          className="hidden sm:flex"
+        />
+        <p className="m-0 p-0 text-lg truncate w-20 ">{coinName} </p>
+        <p className="m-0 p-0 text-lg hidden lg:contents">· {symbol}</p>
       </th>
-      <td className="px-6 py-4">
-        <p className={priceChangeBackgroundClasses}>{priceChange} %</p>
+      <td className="px-2 sm:px-6 py-4">
+        <p className={priceChangeBackgroundClasses}>{priceChange}%</p>
       </td>
-      <td className="px-6 py-4">${priceInUsd}</td>
-      <td className="px-6 py-4">
-        <form onSubmit={handleBuy}>
-          <input
-            type="number"
-            onChange={handleChange}
-            value={amountOfUsdSpent}
-            max={wallet.USD}
-            min={0}
-            className="text-black mr-3"
+      <td className="px-2 sm:px-6 py-4">${priceInUsd}</td>
+      <td>
+        <Button onClick={handleOpenModal} className="p-0">
+          <TbSquareRoundedPlusFilled className="text-green-700 w-6 h-6 sm:w-8 sm:h-8 p-0" />
+        </Button>
+        {modal && (
+          <BuyModal
+            handleClose={handleCloseModal}
+            handleOpen={handleOpenModal}
+            coinName={coinName}
+            coinType={coinType}
+            data={data}
           />
-          <Button primary>Buy</Button>
-        </form>
-      </td>
-      <td className="px-6 py-4">
-        <form onSubmit={handleSell}>
-          <input
-            type="number"
-            onChange={handleChange}
-            value={amountToSell}
-            max={wallet.USD}
-            min={0}
-            className="text-black mr-3 w-"
-          />
-          <Button secondary onClick={handleSell}>
-            Sell
-          </Button>
-        </form>
+        )}
       </td>
     </tr>
   );

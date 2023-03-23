@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 import { updateWalletFromLocalStorage } from "../../store/slices/userSlice";
 import { useGetTenCoinsQuery } from "../../store/apis/fetchCoinData";
 import Coin from "./Coin";
-import { FaAngleDoubleDown } from "react-icons/fa";
-import { FaAngleDoubleUp } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 
 function Trade() {
   const { userName, wallet } = useSelector((state) => {
@@ -51,22 +51,24 @@ function Trade() {
         <p className="text-2xl">Your wallet: ${wallet.USD}</p>
       </div>
       <div
-        className="bg-slate-300 bg-opacity-10 w-full p-8 
+        className="bg-slate-300 bg-opacity-10 w-full sm:p-8 
                 rounded-xl text-white mb-8"
       >
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xl text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead className="text-sm md:text-xl uppercase bg-gray-700 text-gray-400 bg-opacity-60">
             <tr>
               <th>Name</th>
-              <th>Change(24h)</th>
+              <th>Change (24h)</th>
               <th>Price (USD)</th>
-              <th>Amount to buy</th>
+              <th>Buy</th>
             </tr>
           </thead>
           <tbody>{renderedCoins}</tbody>
         </table>
-        <FaAngleDoubleDown onClick={nextPage} />
-        <FaAngleDoubleUp onClick={prevPage} />
+        <div className="flex justify-center gap-16">
+          <FaArrowLeft onClick={prevPage} />
+          <FaArrowRight onClick={nextPage} />
+        </div>
       </div>
     </div>
   );
