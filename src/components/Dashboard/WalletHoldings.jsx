@@ -1,12 +1,24 @@
 import { useSelector } from "react-redux";
 import { useGetCoinDataQuery } from "../../store/apis/fetchCoinData";
 import classNames from "classnames";
+import { TbSquareRoundedXFilled } from "react-icons/tb";
+import { useState } from "react";
+import SellModal from "../SellModal";
+import Button from "../Button";
+
 function WalletHoldings({ coinType }) {
   const { userName, wallet } = useSelector((state) => {
     return state.user;
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  console.log(wallet);
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   const { data, isLoading } = useGetCoinDataQuery(coinType);
 
   let coinName;
@@ -44,6 +56,20 @@ function WalletHoldings({ coinType }) {
       </td>
       <td className="px-6 py-4">
         ${(wallet[coinType] * priceInUsd).toFixed(5)}
+      </td>
+      <td>
+        <Button className="p-0" onClick={handleOpenModal}>
+          {" "}
+          <TbSquareRoundedXFilled className="text-red-700 w-6 h-6 sm:w-8 sm:h-8 p-0" />
+        </Button>
+
+        {isModalOpen && (
+          <SellModal
+            coinType={coinType}
+            priceInUsd={priceInUsd}
+            handleClose={handleCloseModal}
+          />
+        )}
       </td>
     </tr>
   );

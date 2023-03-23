@@ -48,7 +48,10 @@ function Trade() {
                 rounded-xl flex justify-between align-middle text-white mb-8"
       >
         <p className="text-2xl ">Welcome @{userName}</p>
-        <p className="text-2xl">Your wallet: ${wallet.USD}</p>
+        <p className="text-2xl">
+          Your wallet:{" "}
+          <span className="text-green-700">${wallet.USD.toFixed(2)}</span>
+        </p>
       </div>
       <div
         className="bg-slate-300 bg-opacity-10 w-full sm:p-8 
@@ -65,9 +68,9 @@ function Trade() {
           </thead>
           <tbody>{renderedCoins}</tbody>
         </table>
-        <div className="flex justify-center gap-16">
-          <FaArrowLeft onClick={prevPage} />
-          <FaArrowRight onClick={nextPage} />
+        <div className="flex justify-center gap-16 mt-7">
+          <FaArrowLeft onClick={prevPage} className="w-6 h-6" />
+          <FaArrowRight onClick={nextPage} className="w-6 h-6" />
         </div>
       </div>
     </div>

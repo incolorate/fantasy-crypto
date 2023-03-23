@@ -1,42 +1,43 @@
 import ReactDOM from "react-dom";
 import Button from "./Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { buyCrypto, updateUsd } from "../store/index";
+import { sellCrypto, updateUsd } from "../store/index";
 import { BsArrowDownUp } from "react-icons/bs";
 
-function BuyModal({ handleClose, handleOpen, coinName, coinType, data }) {
+function SellModal({ coinType, priceInUsd, handleClose }) {
   const { userName, wallet } = useSelector((state) => {
     return state.user;
   });
-  const [amountOfUsdSpent, setAmountOfUsdSpent] = useState(0 || "");
+  const [amountToSell, setAmountToSell] = useState(0 || "");
+
+  useEffect(() => {
+    localStorage.setItem("localWallet", JSON.stringify(wallet));
+  }, [wallet]);
 
   const dispatch = useDispatch();
-  // Control form
 
   const handleChange = (e) => {
-    setAmountOfUsdSpent(e.target.value);
+    setAmountToSell(e.target.value);
   };
 
-  //  this should work
-  const handleBuy = (e) => {
+  const handleSell = (e) => {
     e.preventDefault();
-    if (wallet.USD >= amountOfUsdSpent) {
-      dispatch(updateUsd(amountOfUsdSpent));
-      let dispatchObject = {
-        amountBought: amountOfUsdSpent / data.market_data.current_price.usd,
-        coin: data.id,
-      };
+    let dispatchObject = {
+      coinType: coinType,
+      amountToSell: amountToSell,
+      valueInUsd: amountToSell * priceInUsd,
+    };
 
-      dispatch(buyCrypto(dispatchObject));
-      setAmountOfUsdSpent(0 || "");
-      handleClose();
+    if (wallet[coinType] >= amountToSell) {
+      dispatch(sellCrypto(dispatchObject));
+      setAmountToSell(0);
     }
   };
 
   const handleMaxButton = (e) => {
     e.preventDefault();
-    setAmountOfUsdSpent(wallet.USD);
+    setAmountToSell(wallet[coinType]);
   };
 
   return ReactDOM.createPortal(
@@ -44,18 +45,19 @@ function BuyModal({ handleClose, handleOpen, coinName, coinType, data }) {
       <div className="absolute inset-0 bg-gray-600 opacity-80 overflow-hidden"></div>
       <div className="absolute inset-0 lg:inset-x-60 lg:inset-y-20   p-10 bg-gray-900 text-white">
         <div>
-          <p className="text-green-700 text-3xl mb-4">Buy {coinName}</p>
-          <form onSubmit={handleBuy} className="flex flex-col gap-8">
+          <p className="text-red-700 text-3xl mb-4">Sell {coinType}</p>
+          <form className="flex flex-col gap-8">
             <input
               type="number"
               onChange={handleChange}
-              value={amountOfUsdSpent}
+              value={amountToSell}
+              max={wallet[coinType]}
               className="text-black w-full h-11 text-xl "
             />
             <Button onClick={handleMaxButton}>Max</Button>
-            {amountOfUsdSpent > wallet.USD ? (
+            {amountToSell > wallet[coinType] ? (
               <p className="text-xl text-red-700 fixed mt-12">
-                You only have: ${wallet.USD}
+                You only have: {wallet[coinType]} {coinType}
               </p>
             ) : (
               ""
@@ -64,10 +66,12 @@ function BuyModal({ handleClose, handleOpen, coinName, coinType, data }) {
               <BsArrowDownUp className="w-24 h-24" />
             </div>
             <div className="bg-white text-black w-full h-11 flex flex-col justify-center text-xl">
-              {amountOfUsdSpent / data.market_data.current_price.usd}
+              {amountToSell * priceInUsd}
             </div>
             <div className="flex justify-between">
-              <Button primary>Buy</Button>
+              <Button primary onClick={handleSell}>
+                Sell
+              </Button>
               <Button secondary onClick={handleClose}>
                 Close
               </Button>
@@ -80,4 +84,4 @@ function BuyModal({ handleClose, handleOpen, coinName, coinType, data }) {
   );
 }
 
-export default BuyModal;
+export default SellModal;

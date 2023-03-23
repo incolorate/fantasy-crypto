@@ -13,7 +13,6 @@ const userSlice = createSlice({
   reducers: {
     updateWalletFromLocalStorage(state, action) {
       state.wallet = action.payload;
-      console.log(state.wallet);
     },
     buyCrypto(state, action) {
       let coinType = action.payload.coin;
@@ -25,7 +24,10 @@ const userSlice = createSlice({
       state.wallet.USD = state.wallet.USD - action.payload;
     },
     sellCrypto(state, action) {
-      state.userName = "blah";
+      let coin = action.payload.coinType;
+      let amountOfCoin = action.payload.amountToSell;
+      state.wallet[coin] -= Number(amountOfCoin);
+      state.wallet.USD += Number(action.payload.valueInUsd);
     },
   },
 });
