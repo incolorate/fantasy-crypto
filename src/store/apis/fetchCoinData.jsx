@@ -10,7 +10,15 @@ export const coinsApi = createApi({
     getCoinData: builder.query({
       query: (coin) => `coins/${coin}`,
     }),
+    getTenCoins: builder.query({
+      query: (page) =>
+        `coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=${page}&sparkline=false`,
+    }),
   }),
 });
 
-export const { useGetTrendingCoinsQuery, useGetCoinDataQuery } = coinsApi;
+export const {
+  useGetTrendingCoinsQuery,
+  useGetCoinDataQuery,
+  useGetTenCoinsQuery,
+} = coinsApi;

@@ -10,9 +10,12 @@ function Coin({ coinType }) {
     return state.user;
   });
 
-  const dispatch = useDispatch();
   const [amountOfUsdSpent, setAmountOfUsdSpent] = useState();
-  const { data, isLoading } = useGetCoinDataQuery(coinType);
+  const [amountToSell, setAmountToSell] = useState(wallet[coinType]);
+
+  const dispatch = useDispatch();
+
+  const { data, isLoading, error } = useGetCoinDataQuery(coinType);
 
   const handleBuy = (e) => {
     e.preventDefault();
@@ -21,7 +24,22 @@ function Coin({ coinType }) {
 
       let dispatchObject = {
         amountBought: amountOfUsdSpent / data.market_data.current_price.usd,
-        coin: data.symbol,
+        coin: data.id,
+      };
+
+      dispatch(buyCrypto(dispatchObject));
+      setAmountOfUsdSpent(0 || "");
+    }
+  };
+
+  const handleSell = (e) => {
+    e.preventDefault();
+    if (wallet.USD >= amountOfUsdSpent) {
+      dispatch(updateUsd(amountOfUsdSpent));
+
+      let dispatchObject = {
+        amountBought: amountOfUsdSpent / data.market_data.current_price.usd,
+        coin: data.id,
       };
 
       dispatch(buyCrypto(dispatchObject));
@@ -40,6 +58,12 @@ function Coin({ coinType }) {
   let coinImage;
   if (isLoading) {
     coinName = "Loading...";
+  } else if (error) {
+    coinName = "Error, something went wrong, probably to many api calls..";
+    symbol = "Error, something went wrong, probably to many api calls..";
+    priceChange = "Error, something went wrong, probably to many api calls..";
+    priceInUsd = "Error, something went wrong, probably to many api calls..";
+    coinImage = "Error, something went wrong, probably to many api calls..";
   } else {
     coinName = data.name;
     symbol = data.symbol.toUpperCase();
@@ -78,6 +102,21 @@ function Coin({ coinType }) {
             className="text-black mr-3"
           />
           <Button primary>Buy</Button>
+        </form>
+      </td>
+      <td className="px-6 py-4">
+        <form onSubmit={handleSell}>
+          <input
+            type="number"
+            onChange={handleChange}
+            value={amountToSell}
+            max={wallet.USD}
+            min={0}
+            className="text-black mr-3 w-"
+          />
+          <Button secondary onClick={handleSell}>
+            Sell
+          </Button>
         </form>
       </td>
     </tr>

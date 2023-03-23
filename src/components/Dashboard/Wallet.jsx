@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { updateWalletFromLocalStorage } from "../../store/slices/userSlice";
+import WalletHoldings from "./WalletHoldings";
 import TopBar from "./TopBar";
 
 function Wallet() {
@@ -8,23 +7,28 @@ function Wallet() {
     return state.user;
   });
 
+  let renderedHoldings = Object.keys(wallet).map((keyName) => {
+    return keyName != "USD" ? <WalletHoldings coinType={keyName} /> : "";
+  });
+
   return (
     <div className="text-white">
       <TopBar location="Wallet" />
       <div
-        className="bg-slate-300 bg-opacity-10 w-full p-8 
-                rounded-xl  "
+        className="bg-slate-300 bg-opacity-10 p-2 sm:p-4 
+    rounded-3xl align-middle text-white row-span-3  col-span-3 "
       >
-        {Object.keys(wallet).map((keyName) => (
-          <div
-            key={keyName}
-            className="bg-slate-300 bg-opacity-10 w-full p-8 
-          rounded-xl flex gap-6 mb-3 shadow- shadow-slate-200"
-          >
-            <p>{keyName}:</p>
-            <p>{wallet[keyName]}</p>
-          </div>
-        ))}
+        <p className="text-3xl mb-3">Holdings</p>
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead className="text-sm md:text-xl uppercase bg-gray-700 text-gray-400 bg-opacity-60">
+            <tr>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody> {renderedHoldings}</tbody>
+        </table>
       </div>
     </div>
   );

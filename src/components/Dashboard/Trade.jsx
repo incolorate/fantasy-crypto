@@ -1,8 +1,11 @@
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateWalletFromLocalStorage } from "../../store/slices/userSlice";
+import { useGetTenCoinsQuery } from "../../store/apis/fetchCoinData";
 import Coin from "./Coin";
+import { FaAngleDoubleDown } from "react-icons/fa";
+import { FaAngleDoubleUp } from "react-icons/fa";
 
 function Trade() {
   const { userName, wallet } = useSelector((state) => {
@@ -13,7 +16,26 @@ function Trade() {
     localStorage.setItem("localWallet", JSON.stringify(wallet));
   }, [wallet]);
 
-  const COINS = ["bitcoin", "ethereum", "binancecoin", "ripple", "cardano"];
+  const [page, setPage] = useState(1);
+  const COINS = [];
+
+  const nextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  const prevPage = () => {
+    setPage((prevPage) => {
+      if (prevPage > 1) {
+        prevPage - 1;
+      }
+    });
+  };
+
+  let { data, isLoading, error } = useGetTenCoinsQuery(page);
+
+  if (!isLoading) {
+    data.map((object) => COINS.push(object.id));
+  }
 
   let renderedCoins = COINS.map((coin) => {
     return <Coin key={coin} coinType={coin} />;
@@ -43,6 +65,8 @@ function Trade() {
           </thead>
           <tbody>{renderedCoins}</tbody>
         </table>
+        <FaAngleDoubleDown onClick={nextPage} />
+        <FaAngleDoubleUp onClick={prevPage} />
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
 import Button from "../Button";
 import { Link } from "react-router-dom";
+import CoinCard from "../Dashboard/CoinCard";
 
 function Hero() {
   return (
-    <div className="text-white grid grid-cols-2">
+    <div className="text-white grid md:grid-cols-2 ">
       <div className=" px-5 py-24">
         <div>
           <h1 className="my-4 text-5xl font-bold leading-tight">
@@ -23,10 +24,9 @@ function Hero() {
           </div>
         </div>
       </div>
-      <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
-        <div className="bg-slate-300 bg-opacity-10  p-8 rounded-xl flex justify-between align-middle text-white">
-          <p className="text-5xl">Buy, sell, have fun</p>
-        </div>
+      <div className="container mx-auto  px-5 py-24 items-center justify-center grid gap-5">
+        <CoinCard coinType="bitcoin" />
+        <CoinCard coinType="ethereum" />
       </div>
     </div>
   );
