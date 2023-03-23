@@ -2,7 +2,7 @@ import { useGetTrendingCoinsQuery } from "../../store/apis/fetchCoinData";
 
 function TrendingCoins() {
   const { data, error, isLoading, isSuccess } = useGetTrendingCoinsQuery();
-  console.log(data);
+
   let renderTrendingCoins;
 
   if (isLoading) {
@@ -10,7 +10,10 @@ function TrendingCoins() {
   } else if (isSuccess) {
     renderTrendingCoins = data.coins.map((coin) => {
       return (
-        <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 bg-opa">
+        <tr
+          className="border-b bg-gray-900 border-gray-700 bg-opacity-5"
+          key={coin.item.symbol}
+        >
           <th
             scope="row"
             className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex gap-2 max-sm:px-2"
@@ -29,7 +32,7 @@ function TrendingCoins() {
       );
     });
   } else if (error) {
-    renderTrendingCoins = <h1>error..</h1>;
+    renderTrendingCoins = "Error...";
   }
 
   return (
@@ -39,7 +42,7 @@ function TrendingCoins() {
     >
       <p className="text-3xl mb-3">Trending coins</p>
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-sm md:text-xl text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="text-sm md:text-xl uppercase bg-gray-700 text-gray-400 bg-opacity-60">
           <tr>
             <th>Name</th>
             <th className="max-md:hidden ">Price(USD)</th>

@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../Button";
 import { buyCrypto, updateUsd } from "../../store";
 import { useGetCoinDataQuery } from "../../store/apis/fetchCoinData";
@@ -10,6 +10,7 @@ function Coin({ coinType }) {
     return state.user;
   });
 
+  const dispatch = useDispatch();
   const [amountOfUsdSpent, setAmountOfUsdSpent] = useState();
   const { data, isLoading } = useGetCoinDataQuery(coinType);
 
@@ -38,7 +39,7 @@ function Coin({ coinType }) {
   let priceInUsd;
   let coinImage;
   if (isLoading) {
-    coinName = <h1>Loading...</h1>;
+    coinName = "Loading...";
   } else {
     coinName = data.name;
     symbol = data.symbol.toUpperCase();
@@ -51,7 +52,6 @@ function Coin({ coinType }) {
     "bg-green-200  text-green-900": priceChange > 0,
   });
 
-  console.log(data);
   return (
     <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 bg-opa">
       <th
@@ -76,7 +76,7 @@ function Coin({ coinType }) {
             max={wallet.USD}
             min={0}
             className="text-black mr-3"
-          ></input>
+          />
           <Button primary>Buy</Button>
         </form>
       </td>
