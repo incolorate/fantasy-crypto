@@ -17,13 +17,13 @@ function CoinCard({ coinType }) {
     coinImage = data.image.thumb;
     name = data.name;
     currentPrice = data.market_data.current_price.usd;
-    priceChange = 1;
     priceChange = data.market_data.price_change_percentage_24h;
-    priceChange > 0 ? (
-      <CgTrending className="h-36 w-36  sm:h-36 sm:w-24 md:h-36 md:w-32 xl:h-36  xl:w-36 text-green-700 opacity-30" />
-    ) : (
-      <CgTrendingDown className="h-36 w-36  sm:h-36 sm:w-24 md:h-36 md:w-32 xl:h-36  xl:w-36 text-red-700 opacity-30" />
-    );
+    priceChange =
+      priceChange > 0 ? (
+        <CgTrending className="h-36 w-36  sm:h-36 sm:w-24 md:h-36 md:w-32 xl:h-36  xl:w-36 text-green-700 opacity-30" />
+      ) : (
+        <CgTrendingDown className="h-36 w-36  sm:h-36 sm:w-24 md:h-36 md:w-32 xl:h-36  xl:w-36 text-red-700 opacity-30" />
+      );
   }
 
   return (

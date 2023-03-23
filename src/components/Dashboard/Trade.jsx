@@ -5,12 +5,6 @@ import { updateWalletFromLocalStorage } from "../../store/slices/userSlice";
 import Coin from "./Coin";
 
 function Trade() {
-  let dispatch = useDispatch();
-  useEffect(() => {
-    let localWallet = JSON.parse(localStorage.getItem("localWallet"));
-    dispatch(updateWalletFromLocalStorage(localWallet));
-  }, []);
-
   const { userName, wallet } = useSelector((state) => {
     return state.user;
   });

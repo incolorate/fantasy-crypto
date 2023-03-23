@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+let localWallet = JSON.parse(localStorage.getItem("localWallet"));
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
     userName: "incolorate",
-    wallet: {
-      USD: 1200,
+    wallet: localWallet || {
+      USD: 5000,
     },
   },
   reducers: {

@@ -45,7 +45,7 @@ function TrendingCoins() {
         <thead className="text-sm md:text-xl uppercase bg-gray-700 text-gray-400 bg-opacity-60">
           <tr>
             <th>Name</th>
-            <th className="max-md:hidden ">Price(USD)</th>
+            <th className="max-md:hidden ">Price(BTC)</th>
             <th>Market Cap Rank</th>
           </tr>
         </thead>
