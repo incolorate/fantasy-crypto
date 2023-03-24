@@ -1,10 +1,13 @@
 {
   "name": "fantasy-crypto",
   "private": true,
+  "homepage": "https://github.com/incolorate/fantasy-crypto",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -12,6 +15,7 @@
     "@reduxjs/toolkit": "^1.9.3",
     "chart.js": "^4.2.1",
     "classnames": "^2.3.2",
+    "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
