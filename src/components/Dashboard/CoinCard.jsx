@@ -2,7 +2,7 @@ import { useGetCoinDataQuery } from "../../store/apis/fetchCoinData";
 import { CgTrendingDown } from "react-icons/cg";
 import { CgTrending } from "react-icons/cg";
 
-function CoinCard({ coinType }) {
+function CoinCard({ coinType, ...rest }) {
   const { data, isLoading } = useGetCoinDataQuery(coinType);
 
   console.log(data);

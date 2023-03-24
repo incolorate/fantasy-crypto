@@ -25,8 +25,8 @@ function Hero() {
           </div>
         </div>
       </div>
-      <div className="container mx-auto py-24 items-center justify-center grid gap-5">
-        <img src={hero} alt="heroimg" className="max-sm:hidden" />
+      <div className="container mx-auto py-8 items-center justify-center grid gap-5">
+        <img src={hero} alt="heroimg" className="max-md:hidden" />
       </div>
     </div>
   );

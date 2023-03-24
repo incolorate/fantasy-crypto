@@ -1,5 +1,6 @@
 import NavBar from "./NavBar";
 import Hero from "./Hero";
+import CoinInformation from "./CoinInformation";
 
 function LandingPage() {
   return (
@@ -8,6 +9,9 @@ function LandingPage() {
         <div className="md:container md:mx-auto">
           <NavBar />
           <Hero />
+        </div>
+        <div className="md:container md:mx-auto">
+          <CoinInformation className="w-80" />
         </div>
       </div>
     </div>
