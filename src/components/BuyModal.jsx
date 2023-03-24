@@ -52,7 +52,9 @@ function BuyModal({ handleClose, handleOpen, coinName, coinType, data }) {
               value={amountOfUsdSpent}
               className="text-black w-full h-11 text-xl "
             />
-            <Button onClick={handleMaxButton}>Max</Button>
+            <Button onClick={handleMaxButton} primary>
+              Max
+            </Button>
             {amountOfUsdSpent > wallet.USD ? (
               <p className="text-xl text-red-700 fixed mt-12">
                 You only have: ${wallet.USD}

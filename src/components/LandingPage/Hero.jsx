@@ -1,11 +1,12 @@
 import Button from "../Button";
 import { Link } from "react-router-dom";
 import CoinCard from "../Dashboard/CoinCard";
+import hero from "../../img/hero.svg";
 
 function Hero() {
   return (
     <div className="text-white grid md:grid-cols-2 ">
-      <div className=" px-5 py-24">
+      <div className=" px-5 py-24 max-sm:col-span-2">
         <div>
           <h1 className="my-4 text-5xl font-bold leading-tight">
             Conquer the crypto trading world
@@ -24,9 +25,8 @@ function Hero() {
           </div>
         </div>
       </div>
-      <div className="container mx-auto  px-5 py-24 items-center justify-center grid gap-5">
-        <CoinCard coinType="bitcoin" />
-        <CoinCard coinType="ethereum" />
+      <div className="container mx-auto py-24 items-center justify-center grid gap-5">
+        <img src={hero} alt="heroimg" className="max-sm:hidden" />
       </div>
     </div>
   );
